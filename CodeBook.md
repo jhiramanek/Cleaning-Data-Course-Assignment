@@ -4,6 +4,29 @@ CodeBook:
 This CodeBook describes the transformations or work performed to clean up the data and illustrates the sample data combined to create the final tidyData set.
 The tidydata.txt output is derived from the Human Activity Smart Phone Data Set.
 
+
+The Variables included in the TidyData.txt includes:
+
+SubjectId: A code numeric value to identify the subject who performed the activity for each window sample. Its range is from 1 to 30. 
+
+ActivityName: The type of activity people performed (WALKING, WALKING_UPSTAIRS, WALKING_DOWNSTAIRS, SITTING, STANDING, LAYING) while wearing a smartphone (Samsung Galaxy S II) on the waist.
+
+ActivityID: The unique Id refrencing the Activity description
+
+
+The other features selected from the accelerometer and gyroscope 3-axial raw signals tAcc-XYZ and tGyro-XYZ. These time domain signals (prefix 't' to denote time) were captured at a constant rate of 50 Hz. Then they were filtered using a median filter and a 3rd order low pass Butterworth filter with a corner frequency of 20 Hz to remove noise. Similarly, the acceleration signal was then separated into body and gravity acceleration signals (tBodyAcc-XYZ and tGravityAcc-XYZ) using another low pass Butterworth filter with a corner frequency of 0.3 Hz. 
+Subsequently, the body linear acceleration and angular velocity were derived in time to obtain Jerk signals (tBodyAccJerk-XYZ and tBodyGyroJerk-XYZ). Also the magnitude of these three-dimensional signals were calculated using the Euclidean norm (tBodyAccMag, tGravityAccMag, tBodyAccJerkMag, tBodyGyroMag, tBodyGyroJerkMag). 
+Finally a Fast Fourier Transform (FFT) was applied to some of these signals producing fBodyAcc-XYZ, fBodyAccJerk-XYZ, fBodyGyro-XYZ, fBodyAccJerkMag, fBodyGyroMag, fBodyGyroJerkMag. (Note the 'f' to indicate frequency domain signals). 
+These signals were used to estimate variables of the feature vector for each pattern:  
+'-XYZ' is used to denote 3-axial signals in the X, Y and Z directions.
+
+The acceleration signal from the smartphone accelerometer X axis in standard gravity units 'g'. Every row shows a 128 element vector. The same description applies for the 'total_acc_x_train.txt' and 'total_acc_z_train.txt' files for the Y and Z axis. 
+The body acceleration signal obtained by subtracting the gravity from the total acceleration. 
+The angular velocity vector measured by the gyroscope for each window sample. The units are radians/second. 
+
+The Tidy Data Set summarises the measurements were summarised by averaging them across each Activity and Subject from combined observations from the Training and Test data sets.
+
+
 The R script called run_analysis.R does the following.
 
 Step 1: Download the data from the source archive and save it to the target machine for processing
@@ -211,6 +234,58 @@ Step 7: Create an independent tidy data set with the average of each variable fo
 
 		write.table(finalOutput, "tidydata.txt", quote = FALSE, row.names = FALSE)   
 		
+		head(finalOutput)
+			# A tibble: 6 x 69
+			# Groups:   subjectID [1]
+			  subjectID activityName activityId timeBodyAcceler~ timeBodyAcceler~
+				  <int> <fct>             <dbl>            <dbl>            <dbl>
+			1         1 LAYING                6            0.222         -0.0405 
+			2         1 SITTING               4            0.261         -0.00131
+			3         1 STANDING              5            0.279         -0.0161 
+			4         1 WALKING               1            0.277         -0.0174 
+			5         1 WALKING_DOW~          3            0.289         -0.00992
+			6         1 WALKING_UPS~          2            0.255         -0.0240 
+			# ... with 64 more variables: timeBodyAccelerometerMeanZ <dbl>,
+			#   timeBodyAccelerometerStdX <dbl>, timeBodyAccelerometerStdY <dbl>,
+			#   timeBodyAccelerometerStdZ <dbl>, timeGravityAccelerometerMeanX <dbl>,
+			#   timeGravityAccelerometerMeanY <dbl>, timeGravityAccelerometerMeanZ <dbl>,
+			#   timeGravityAccelerometerStdX <dbl>, timeGravityAccelerometerStdY <dbl>,
+			#   timeGravityAccelerometerStdZ <dbl>, timeBodyAccelerometerJerkMeanX <dbl>,
+			#   timeBodyAccelerometerJerkMeanY <dbl>, timeBodyAccelerometerJerkMeanZ <dbl>,
+			#   timeBodyAccelerometerJerkStdX <dbl>, timeBodyAccelerometerJerkStdY <dbl>,
+			#   timeBodyAccelerometerJerkStdZ <dbl>, timeBodyGyroscopeMeanX <dbl>,
+			#   timeBodyGyroscopeMeanY <dbl>, timeBodyGyroscopeMeanZ <dbl>,
+			#   timeBodyGyroscopeStdX <dbl>, timeBodyGyroscopeStdY <dbl>,
+			#   timeBodyGyroscopeStdZ <dbl>, timeBodyGyroscopeJerkMeanX <dbl>,
+			#   timeBodyGyroscopeJerkMeanY <dbl>, timeBodyGyroscopeJerkMeanZ <dbl>,
+			#   timeBodyGyroscopeJerkStdX <dbl>, timeBodyGyroscopeJerkStdY <dbl>,
+			#   timeBodyGyroscopeJerkStdZ <dbl>, timeBodyAccelerometerMagnitudeMean <dbl>,
+			#   timeBodyAccelerometerMagnitudeStd <dbl>,
+			#   timeGravityAccelerometerMagnitudeMean <dbl>,
+			#   timeGravityAccelerometerMagnitudeStd <dbl>,
+			#   timeBodyAccelerometerJerkMagnitudeMean <dbl>,
+			#   timeBodyAccelerometerJerkMagnitudeStd <dbl>,
+			#   timeBodyGyroscopeMagnitudeMean <dbl>, timeBodyGyroscopeMagnitudeStd <dbl>,
+			#   timeBodyGyroscopeJerkMagnitudeMean <dbl>,
+			#   timeBodyGyroscopeJerkMagnitudeStd <dbl>, frequencyBodyAccelerometerMeanX <dbl>,
+			#   frequencyBodyAccelerometerMeanY <dbl>, frequencyBodyAccelerometerMeanZ <dbl>,
+			#   frequencyBodyAccelerometerStdX <dbl>, frequencyBodyAccelerometerStdY <dbl>,
+			#   frequencyBodyAccelerometerStdZ <dbl>, frequencyBodyAccelerometerJerkMeanX <dbl>,
+			#   frequencyBodyAccelerometerJerkMeanY <dbl>,
+			#   frequencyBodyAccelerometerJerkMeanZ <dbl>,
+			#   frequencyBodyAccelerometerJerkStdX <dbl>,
+			#   frequencyBodyAccelerometerJerkStdY <dbl>,
+			#   frequencyBodyAccelerometerJerkStdZ <dbl>, frequencyBodyGyroscopeMeanX <dbl>,
+			#   frequencyBodyGyroscopeMeanY <dbl>, frequencyBodyGyroscopeMeanZ <dbl>,
+			#   frequencyBodyGyroscopeStdX <dbl>, frequencyBodyGyroscopeStdY <dbl>,
+			#   frequencyBodyGyroscopeStdZ <dbl>, frequencyBodyAccelerometerMagnitudeMean <dbl>,
+			#   frequencyBodyAccelerometerMagnitudeStd <dbl>,
+			#   frequencyBodyAccelerometerJerkMagnitudeMean <dbl>,
+			#   frequencyBodyAccelerometerJerkMagnitudeStd <dbl>,
+			#   frequencyBodyGyroscopeMagnitudeMean <dbl>,
+			#   frequencyBodyGyroscopeMagnitudeStd <dbl>,
+			#   frequencyBodyGyroscopeJerkMagnitudeMean <dbl>,
+			#   frequencyBodyGyroscopeJerkMagnitudeStd <dbl>
 		
 		
 

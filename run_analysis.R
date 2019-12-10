@@ -29,11 +29,11 @@ dataPath <-  normalizePath(path.expand("Cleaning-Data-Course-Assignment\\UCI HAR
         colnames(featureTableTmp) <- c("featureId","featureName")
         
 	##Get std-dev and mean measures
-        features$select=grepl("mean|std",featureTableTmp$featureName)
-        featureTableTmp <- featureTableTmp[features$select == TRUE,]
+        featuresSelect=grepl("mean|std",featureTableTmp$featureName)
+        featureTableTmp <- featureTableTmp[featuresSelect == TRUE,]
         
 	## Remove the MeanFreq column and store feature column positions
-        requiredFeatures <- grep("meanFreq()",featureTable$featureName, invert = TRUE)
+        requiredFeatures <- grep("meanFreq()",featureTableTmp$featureName, invert = TRUE)
         featureTable <- featureTableTmp[requiredFeatures, ]
 
 ## Load Activities ID and Activity Name
@@ -65,7 +65,7 @@ dataPath <-  normalizePath(path.expand("Cleaning-Data-Course-Assignment\\UCI HAR
         
 ## Prepare Training Data Frame
         
-		##Load Training Data
+	##Load Training Data
         xDataTrainTemp <- read.table(file.path(dataPath, "/train/X_train.txt", fsep = "\\"))
         xDataTrain <- xDataTrainTemp[ ,requiredFeatures]
         colnames(xDataTrain) <- featureTable$featureName
@@ -74,10 +74,10 @@ dataPath <-  normalizePath(path.expand("Cleaning-Data-Course-Assignment\\UCI HAR
         yDataTrain <- read.table(file.path(dataPath, "/train/y_train.txt", fsep = "\\"))
         colnames(yDataTrain) <- c("activityId")
         
-		##Combine x and y Data
+	##Combine x and y Data
         dataTableTrain <- cbind(yDataTrain,xDataTrain)
         
-		## Join Activity Name to ActivityID
+	## Join Activity Name to ActivityID
         dataTableTrain <- inner_join(dataTableTrain,activityLabels,by.x = "activityId", by.y = "activityId")
         
         ## Add Subject ID
@@ -86,7 +86,7 @@ dataPath <-  normalizePath(path.expand("Cleaning-Data-Course-Assignment\\UCI HAR
         dataTableTrain <- cbind(subjectDataTrain, dataTableTrain)
         
 ## Merge Training and Testing Data
-		mergedDataSet <- rbind(dataTableTrain,dataTableTest)		
+	mergedDataSet <- rbind(dataTableTrain,dataTableTest)		
 
 ## Clean the ColumnNames 
 ## labels the data set with descriptive variable names
